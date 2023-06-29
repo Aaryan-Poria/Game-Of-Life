@@ -1,6 +1,7 @@
 import random
 import numpy as np
 
+
 def random_state(height, width):
     board_state=[]
     for i in range(height):
@@ -18,19 +19,42 @@ def random_state(height, width):
 def calcNeighbours(board_state,i,j):
     rows=len(board_state)
     columns= len(board_state[0])
-    sum=0
-    if (i==0):
-        if (j==0 or j==columns-1):
+    total_sum=0
+    if (i==0 or i==rows-1):
+        if (j==0):
             for x in range (2):
                 for y in range (2):
-                    sum+=board_state[i+x][j+y]
+                    print(f'board-state value: {board_state[i+x][j+x]}')
+                    total_sum+=board_state[i+x][j+y]
+        elif (j==columns-1):
+            for x in range(2):
+                for y in range(-1,1):
+                    total_sum += board_state[i + x][j + y]
+        else:
+            if (i==0): # Top Row
+                for x in range(2):
+                    for y in range (-1,2):
+                        total_sum += board_state[i + x][j + y]
+            else:
+                for x in range (-1,2):
+                    for y in range (-1,1):
+                        total_sum += board_state[i + x][j + y]
+    elif (j==0):
+        for x in range (2):
+            for y in range (-1,2):
+                total_sum += board_state[i + x][j + y]
+    elif (j==columns-1):
+        for x in range (-1,1):
+            for y in range(-1,2):
+                total_sum += board_state[i + x][j + y]
     else:
         for x in range(-1,2):
             for y in range (-1,2):
-                sum+=board_state[i+x][j+y]
-        sum-=board_state[i][j]        # So that it doesn't count itself
+                total_sum+=board_state[i+x][j+y]
+    total_sum-=board_state[i][j]        # So that it doesn't count itself
+    return total_sum
 
-
+    
 
 def next_board_state(board,rows,columns):
     for i in range(rows):
@@ -59,6 +83,5 @@ def render(board_state):
 
 random.seed(None,version=2)
 
-a_random_state = random_state(20, 30)
-render(a_random_state)
+lst=[[1,0,1,1],[1,1,0,1],[0,0,1,1],[1,1,1,0]]
 
