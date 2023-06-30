@@ -1,5 +1,7 @@
 import random
 import numpy as np
+import os
+
 
 global rows
 global columns
@@ -104,46 +106,25 @@ def render(board_state):
         if i < rows - 1:
             print("- " * columns)  # Add horizontal grid lines
 
-def unitTest(initial_state, next_state):
-    expected_state = None
-    if initial_state == [[0,0,0],
-                         [0,0,0],
-                         [0,0,0]]:
-        print("In Condition-1")
-        expected_state = [[0,0,0],
-                          [0,0,0],
-                          [0,0,0]]
-    elif initial_state == [[0,0,1],
-                           [0,1,1],
-                           [0,0,0]]:
-        print("In Condition 2")
-        expected_state = [[0,1,1],
-                          [0,1,1],
-                          [0,0,0]]
-    elif initial_state==[
-    [0, 1, 0],
-    [0, 1, 0],
-    [0, 1, 0]]:
-        print("In Condition-3")
-        expected_state=[[0,0,0],
-                        [1,1,1],
-                        [0,0,0]
-                        ]
-    print(expected_state==next_state)
-
-
-
 
 random.seed(None,version=2)
 
-rows=4
-columns=4
-initial_state=[
-  [1, 0, 0, 1],
-  [0, 1, 1, 0],
-  [0, 1, 1, 0],
-  [1, 0, 0, 1]
-]
-nextState=next_board_state(initial_state)
-render(nextState)
+rows= int(input("Enter the number of rows: "))
+columns= int(input("Enter the number of columns: "))
+start_state= random_state()
+render(start_state)
+print("\n")
+while True:
+    input("Press Enter to generate the next state: ")
+    new_state=next_board_state(start_state)
+    if os.name=="nt":
+        _=os.system("cls")
+    else:
+        _=os.system("clear")
+
+    render(new_state)
+    start_state=new_state
+
+
+
 
