@@ -1,12 +1,23 @@
 import random
 import numpy as np
 
+global rows
+global columns
 
-def random_state(height, width):
+def dead_state():
     board_state=[]
-    for i in range(height):
+    for i in range(rows):
         row=[]
-        for j in range (width):
+        for j in range (columns):
+           row.append(0)
+        board_state.append(row)
+    return board_state
+
+def random_state():
+    board_state=[]
+    for i in range(rows):
+        row=[]
+        for j in range (columns):
             random_number=  random.random()
             if (random_number>=0.5):
                  cell_state=1
@@ -17,35 +28,46 @@ def random_state(height, width):
     return board_state
 
 def calcNeighbours(board_state,i,j):
-    rows=len(board_state)
-    columns= len(board_state[0])
     total_sum=0
-    if (i==0 or i==rows-1):
+    if (i==0):
         if (j==0):
             for x in range (2):
                 for y in range (2):
-                    print(f'board-state value: {board_state[i+x][j+x]}')
                     total_sum+=board_state[i+x][j+y]
         elif (j==columns-1):
-            for x in range(2):
-                for y in range(-1,1):
+            for x in range(0,2):
+                for y in range(-1,0):
                     total_sum += board_state[i + x][j + y]
         else:
             if (i==0): # Top Row
-                for x in range(2):
+                for x in range(0,2):
                     for y in range (-1,2):
                         total_sum += board_state[i + x][j + y]
             else:
-                for x in range (-1,2):
-                    for y in range (-1,1):
+                for x in range (-1,1):
+                    for y in range (-1,):
                         total_sum += board_state[i + x][j + y]
+    elif (i==rows-1):
+        if (j==0):
+            for x in range(-1,1):
+                for y in range (2):
+                    total_sum += board_state[i + x][j + y]
+        elif (j==columns-1):
+            for x in range (-1,1):
+                for y in range (-1,1):
+                    total_sum += board_state[i + x][j + y]
+        else:
+            for x in range(-1,1):
+                for y in range(-1,2):
+                    total_sum += board_state[i + x][j + y]
+
     elif (j==0):
-        for x in range (2):
-            for y in range (-1,2):
+        for x in range (-1,2):
+            for y in range (0,2):
                 total_sum += board_state[i + x][j + y]
     elif (j==columns-1):
-        for x in range (-1,1):
-            for y in range(-1,2):
+        for x in range (-1,2):
+            for y in range(-1,1):
                 total_sum += board_state[i + x][j + y]
     else:
         for x in range(-1,2):
@@ -56,16 +78,20 @@ def calcNeighbours(board_state,i,j):
 
     
 
-def next_board_state(board,rows,columns):
+def next_board_state(initial_state):
+    new_state=dead_state()
     for i in range(rows):
         for j in range(columns):
-            pass
-            
-
+            liveNeighbours=calcNeighbours(initial_state,i,j)
+            if initial_state[i][j]==1 and (liveNeighbours==2 or liveNeighbours==3):
+                new_state[i][j]=1
+            elif (initial_state[i][j]==0 and liveNeighbours==3):
+                new_state[i][j]=1
+            else:
+                new_state[i][j]=0
+    return new_state
 
 def render(board_state):
-    rows=len(board_state)
-    columns= len(board_state[0])
     for i in range(rows):
         for j in range(columns):
             if board_state[i][j] == 1:
@@ -78,10 +104,40 @@ def render(board_state):
         if i < rows - 1:
             print("- " * columns)  # Add horizontal grid lines
 
-
+def unitTest(initial_state, next_state):
+    if (initial_state==[
+        [0,0,0],
+        [0,0,0],
+        [0,0,0]]):
+        expected_state= [
+        [0,0,0],
+        [0,0,0],
+        [0,0,0]
+        ]
+    elif (initial_state==[[0,0,1],
+        [0,1,1],
+        [0,0,0]
+    ]):
+        expected_state= [
+        [0,1,1],
+        [0,1,1],
+        [0,0,0]
+    ]
+    if (next_state==expected_state):
+        return True
+    return False
 
 
 random.seed(None,version=2)
 
-lst=[[1,0,1,1],[1,1,0,1],[0,0,1,1],[1,1,1,0]]
+rows=4
+columns=4
+initial_state=[
+        [0,0,0,0],
+        [0,0,0,0],
+        [0,0,0,0],
+        [0,0,0,0]
+        ]
+nextstate=next_board_state(initial_state)
+print(calcNeighbours(initial_state,0,2))
 
