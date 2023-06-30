@@ -36,7 +36,7 @@ def calcNeighbours(board_state,i,j):
                     total_sum+=board_state[i+x][j+y]
         elif (j==columns-1):
             for x in range(0,2):
-                for y in range(-1,0):
+                for y in range(-1,1):
                     total_sum += board_state[i + x][j + y]
         else:
             if (i==0): # Top Row
@@ -105,27 +105,33 @@ def render(board_state):
             print("- " * columns)  # Add horizontal grid lines
 
 def unitTest(initial_state, next_state):
-    if (initial_state==[
-        [0,0,0],
-        [0,0,0],
-        [0,0,0]]):
-        expected_state= [
-        [0,0,0],
-        [0,0,0],
-        [0,0,0]
-        ]
-    elif (initial_state==[[0,0,1],
-        [0,1,1],
-        [0,0,0]
-    ]):
-        expected_state= [
-        [0,1,1],
-        [0,1,1],
-        [0,0,0]
-    ]
-    if (next_state==expected_state):
-        return True
-    return False
+    expected_state = None
+    if initial_state == [[0,0,0],
+                         [0,0,0],
+                         [0,0,0]]:
+        print("In Condition-1")
+        expected_state = [[0,0,0],
+                          [0,0,0],
+                          [0,0,0]]
+    elif initial_state == [[0,0,1],
+                           [0,1,1],
+                           [0,0,0]]:
+        print("In Condition 2")
+        expected_state = [[0,1,1],
+                          [0,1,1],
+                          [0,0,0]]
+    elif initial_state==[
+    [0, 1, 0],
+    [0, 1, 0],
+    [0, 1, 0]]:
+        print("In Condition-3")
+        expected_state=[[0,0,0],
+                        [1,1,1],
+                        [0,0,0]
+                        ]
+    print(expected_state==next_state)
+
+
 
 
 random.seed(None,version=2)
@@ -133,11 +139,11 @@ random.seed(None,version=2)
 rows=4
 columns=4
 initial_state=[
-        [0,0,0,0],
-        [0,0,0,0],
-        [0,0,0,0],
-        [0,0,0,0]
-        ]
-nextstate=next_board_state(initial_state)
-print(calcNeighbours(initial_state,0,2))
+  [1, 0, 0, 1],
+  [0, 1, 1, 0],
+  [0, 1, 1, 0],
+  [1, 0, 0, 1]
+]
+nextState=next_board_state(initial_state)
+render(nextState)
 
