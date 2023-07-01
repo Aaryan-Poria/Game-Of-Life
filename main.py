@@ -77,54 +77,6 @@ def calcNeighbours(board_state,i,j):
     total_sum-=board_state[i][j]        # So that it doesn't count itself
     return total_sum
   
-def calcNeighbours(board_state,i,j):
-    total_sum=0
-    if (i==0):
-        if (j==0):
-            for x in range (2):
-                for y in range (2):
-                    total_sum+=board_state[i+x][j+y]
-        elif (j==columns-1):
-            for x in range(0,2):
-                for y in range(-1,1):
-                    total_sum += board_state[i + x][j + y]
-        else:
-            if (i==0): # Top Row
-                for x in range(0,2):
-                    for y in range (-1,2):
-                        total_sum += board_state[i + x][j + y]
-            else:
-                for x in range (-1,1):
-                    for y in range (-1,):
-                        total_sum += board_state[i + x][j + y]
-    elif (i==rows-1):
-        if (j==0):
-            for x in range(-1,1):
-                for y in range (2):
-                    total_sum += board_state[i + x][j + y]
-        elif (j==columns-1):
-            for x in range (-1,1):
-                for y in range (-1,1):
-                    total_sum += board_state[i + x][j + y]
-        else:
-            for x in range(-1,1):
-                for y in range(-1,2):
-                    total_sum += board_state[i + x][j + y]
-
-    elif (j==0):
-        for x in range (-1,2):
-            for y in range (0,2):
-                total_sum += board_state[i + x][j + y]
-    elif (j==columns-1):
-        for x in range (-1,2):
-            for y in range(-1,1):
-                total_sum += board_state[i + x][j + y]
-    else:
-        for x in range(-1,2):
-            for y in range (-1,2):
-                total_sum+=board_state[i+x][j+y]
-    total_sum-=board_state[i][j]        # So that it doesn't count itself
-    return total_sum
 
 def next_board_state(initial_state):
     new_state=dead_state()
@@ -162,15 +114,9 @@ def readFromFile():
 
 random.seed(None,version=2)
 
-
-
 start_state= readFromFile()
 rows= len(start_state)
 columns= len(start_state[0])
-
-rows= int(input("Enter the number of rows: "))
-columns= int(input("Enter the number of columns: "))
-start_state= random_state()
 
 render(start_state)
 print("\n")
