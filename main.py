@@ -119,6 +119,7 @@ rows= len(start_state)
 columns= len(start_state[0])
 
 render(start_state)
+
 while True:
     input("Press Enter to generate the next state: ")
     new_state=next_board_state(start_state)
